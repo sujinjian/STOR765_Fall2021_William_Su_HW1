@@ -1,0 +1,59 @@
+---
+title: "01_Make_Data"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Load in tidyverse data: games
+library(tidytuesdayR)
+tt_data <- tt_load("2021-03-16")
+
+```
+
+
+```{r}
+#Assign "games" data to games_data
+games_data = tt_data$games
+games_data
+```
+
+
+```{r}
+#Display Variables/Features
+print(names(games_data))
+
+```
+
+
+```{r}
+#Display dimensions
+dim(games_data)
+```
+
+The dataset features 7 variables: The game's name, the year, the month, avg: the average number of players, gain: difference in average players compared to previous month, peak: highest number of players at the same time and avg_peak_perc: avg divided by peak as a percentage. 
+
+
+```{r}
+unique(games_data$year)
+
+```
+
+The dataset contains data from years 2012 to 2021
+
+
+```{r}
+unique(games_data$month)
+```
+
+The data contains all 12 months of the year
+
+```{r}
+length(unique(games_data$gamename))
+```
+
+The data contains 1258 games
+

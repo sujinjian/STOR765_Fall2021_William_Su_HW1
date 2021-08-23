@@ -1,0 +1,83 @@
+---
+title: "03_Killer_Graph"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Load in tidyverse data: games
+library(tidytuesdayR)
+tt_data <- tt_load("2021-03-16")
+
+
+```
+
+
+```{r}
+#Assign "games" data to games_data
+games_data = tt_data$games
+
+#Extract out just data on the game Dota 2
+dota2_data = games_data[games_data$gamename == "Dota 2",]
+
+#Extract out just data on Dota in 2019
+dota2_data_2019 = dota2_data[dota2_data$year == 2019,]
+
+#Factor the months so they're in chronological order
+
+month_factor  = factor(as.factor(dota2_data_2019$month), 
+                      levels=c("January", "Febuary", "March",
+                               "April", "May", "June", "July",
+                               "August", "September", "October",
+                               "November", "December"))
+
+
+
+plot(month_factor, dota2_data_2019$avg,
+      xlab="Month ", ylab="Average Player Count", ylim=c(50000,800000))
+title("Dota 2 Average Player Count 2019")
+```
+
+Here we are looking at the average player count of the game Dota 2 during 2019. 
+2019 is an interesting year when compared to the previous 3 years (listed below).
+
+As you can see, the previous 3 years exhibits a similar pattern while 2019 is more wild.
+
+The most noteworthy is just how stable the average player count is for previous 3 yeaers.
+Another is that near the end of summer(Aug, September), there is a big Dota 2 tournament called The International(TI).
+Valve(The game developer) does alot of things in the summer to promote it, so there is usually a jump in the player base. Along with other factors like summer break etc. 
+
+However 2019 shows a steady pattern of dropping players leading up to the end of summer.
+What's more interesting is that 2020(Last graph of the page) shows a similar trend, but there was no TI in 2020 due to Covid-19. 
+
+```{r}
+for (x in c(2018,2017,2016)){
+  dota2_data_year = dota2_data[dota2_data$year == x,]
+
+  plot(month_factor, dota2_data_year$avg,
+      xlab="Month ", ylab="Average Player Count", ylim=c(50000,800000))
+  titles<- paste(c("Dota 2 Average Player Count ", x), collapse = "")
+  title(titles)
+
+}
+```
+
+
+
+```{r}
+dota2_data_year = dota2_data[dota2_data$year == 2020,]
+
+plot(month_factor, dota2_data_year$avg,
+    xlab="Month ", ylab="Average Player Count", ylim=c(50000,800000))
+titles<- paste(c("Dota 2 Average Player Count ", x), collapse = "")
+title(titles)
+
+
+```
+
+
+
+

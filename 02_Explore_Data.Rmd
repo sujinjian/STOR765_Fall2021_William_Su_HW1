@@ -1,0 +1,82 @@
+---
+title: "02_Explore_Data"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Load in tidyverse data: games
+library(tidytuesdayR)
+tt_data <- tt_load("2021-03-16")
+
+```
+
+
+```{r}
+#Assign "games" data to games_data
+games_data = tt_data$games
+games_data
+```
+
+
+```{r}
+dota2_data = games_data[games_data$gamename == "Dota 2",]
+dota2_data
+```
+
+```{r}
+plot(dota2_data$year, dota2_data$avg)
+title("Dota 2 Average Player Count")
+
+
+```
+
+
+
+
+```{r}
+dota2_data_2019 = dota2_data[dota2_data$year == 2019,]
+dota2_data_2019
+
+month_factor  = factor(as.factor(dota2_data_2019$month), 
+                      levels=c("January", "Febuary", "March",
+                               "April", "May", "June", "July",
+                               "August", "September", "October",
+                               "November", "December"))
+
+
+
+plot(month_factor, dota2_data_2019$avg,
+      xlab="Month ", ylab="Average Player Count")
+title("Dota 2 Average Player Count 2019")
+```
+
+
+```{r}
+for (x in unique(dota2_data$year)){
+  dota2_data_2019 = dota2_data[dota2_data$year == x,]
+  dota2_data_2019
+
+  month_factor  = factor(as.factor(dota2_data_2019$month), 
+                      levels=c("January", "Febuary", "March",
+                               "April", "May", "June", "July",
+                               "August", "September", "October",
+                               "November", "December"))
+
+
+
+  plot(month_factor, dota2_data_2019$avg,
+      xlab="Month ", ylab="Average Player Count", ylim=c(50000,800000))
+  titles<- paste(c("Dota 2 Average Player Count ", x), collapse = "")
+  title(titles)
+
+}
+```
+
+
+
+
+
